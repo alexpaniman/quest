@@ -39,6 +39,7 @@ endif ()
 # ==> Add libraries
 
 add_subdirectory(lib/fmt)
+add_subdirectory(lib/quest)
 
 # ==> Add project's core 
 
