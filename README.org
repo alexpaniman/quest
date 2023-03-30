@@ -1,0 +1,54 @@
+* Quest
+
+** Building
+
+*** Prerequisites
+You need to have:
+
++ ~Clang~ 
++ ~CMake~
++ ~Ninja~
+
+installed on your system.
+
+On ~Arch Linux~ you can install all of them with:
+#+begin_src shell
+  pacman -Sy --needed cmake ninja clang
+#+end_src
+
+On ~Ubuntu~ you can install them with:
+
+#+begin_src shell
+  sudo apt-get install -y cmake ninja-build clang
+#+end_src
+
+If you are using other distros, use your package 
+manager to look up package names, and install them.
+
+*** Installation
+*Clone this repository and cd to cloned directory:*
+
+#+begin_src shell
+  git clone git@github.com:alexpaniman/quest.git
+  cd quest
+#+end_src
+
+*Then, create build directory and configure:*
+
+#+begin_src shell
+  mkdir -p build
+  cd build
+  cmake .. -DCMAKE_CXX_COMPILER=clang++ -G Ninja -DCMAKE_BUILD_TYPE=Release
+  # Make sure that you use recent clang! Project uses some new features.
+#+end_src
+
+Optionally you can use ~-DCMAKE_EXPORT_COMPILE_COMMANDS=ON~ if you
+want to import this project with ~clangd~ language server.
+
+And ~-DFORCE_COLORED_OUTPUT=ON~ to get colorful diagnostics with ~Ninja~
+
+Now build and run (you should still be in ~build~ directory):
+#+begin_src shell
+  cmake --build .
+  ./compass-and-straightedge
+#+end_src
