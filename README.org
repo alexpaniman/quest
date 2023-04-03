@@ -50,5 +50,5 @@ And ~-DFORCE_COLORED_OUTPUT=ON~ to get colorful diagnostics with ~Ninja~
 Now build and run (you should still be in ~build~ directory):
 #+begin_src shell
   cmake --build .
-  ./compass-and-straightedge
+  ./quest
 #+end_src
