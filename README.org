@@ -1,4 +1,12 @@
 * Quest
+Text adventure game inspired by Hunt-the-Wumpus!
+You can explore the map, and kill *wumpuses* with items!
+
+Just follow build instructions, run it, you should see something like this:
+
+[[file:img/game-screenshot-in-terminal.png]]
+
+And there the journey begins!
 
 ** Building
 
