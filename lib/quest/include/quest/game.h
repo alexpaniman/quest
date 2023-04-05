@@ -11,16 +11,21 @@ namespace quest {
 
     class game {
     public:
-        game(int cols, int rows);
+        game(quest::game_map map);
         void run();
 
     private:
-        quest::game_map map_;
-        quest::player player_;
+        void print_map();
+        void print_player_stats();
 
         void describe_feelings();
         void ask_to_act();
         void ask_to_move();
+
+        quest::game_map map_;
+        quest::player player_;
+
+        bool is_running_;
     };
 
 }

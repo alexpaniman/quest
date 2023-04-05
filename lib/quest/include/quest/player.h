@@ -1,51 +1,45 @@
 #pragma once
 
 #include "quest/action.h"
+#include "quest/game-map.h"
 
+#include "fmt/color.h"
 #include "fmt/core.h"
+
 #include <string>
 #include <set>
 
 
 namespace quest {
 
-    class cell;
-    class game_map;
-
-    enum class move_direction { UP, DOWN, LEFT, RIGHT };
-
     class player {
     public:
-        player(quest::game_map &map, int max_hp);
+        player(quest::proxy_cell cell, int max_hp);
 
         std::vector<quest::action> get_available_actions();
         std::set<std::string> get_feelings();
 
         void notify(fmt::string_view format, auto&&... printed_data) {
-            // TODO: for now just print message
-            fmt::vprint(format, fmt::make_format_args(
-                std::forward<decltype(printed_data)>(printed_data)...));
+            // TODO: move this to game, so it's possible to easily reimplement UI
+            std::string message = fmt::vformat(format,
+                fmt::make_format_args(
+                    std::forward<decltype(printed_data)>(printed_data)...)); 
+
+            fmt::print(fg(fmt::color::indian_red) | fmt::emphasis::bold, "\n! {}", message);
         }
 
-        void move_to(move_direction direction);
+        quest::proxy_cell position() { return current_cell_; }
+        void move(quest::move_direction direction);
 
         bool is_alive();
 
+        int hp() { return hp_; }
         void heal(int hp);
         void damage(int hp);
 
     private:
-        struct position { int row, col; };
-
-        position pos_ = { 0, 0 };
-        quest::game_map &map_;
-
+        quest::proxy_cell current_cell_;
         int max_hp_, hp_;
-
-        quest::cell get_current_cell();
-        bool can_move_to(int row, int col);
-
-        void lookup_feeling(int row, int col, std::set<std::string> &feelings);
     };
 
 }

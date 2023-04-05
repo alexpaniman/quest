@@ -2,23 +2,26 @@
 #include "quest/player.h"
 
 #include <optional>
-#include <cassert>
 
 namespace quest {
 
-    void cell::on_enter(player *player) const {
+    void cell::on_enter(player *player) {
+        visited_ = true;
+
         if (kind == regular)
             return;
 
         if (kind == wumpus)
-            fmt::print("Oh no! There's a wumpus there!");
+            player->notify("Oh no! There's a wumpus there!\n");
 
         if (kind == hole)
-            fmt::print("Oh no! You fell in hole!");
+            player->notify("Oh no! You fell in hole!\n");
+
+        player->damage(1);
 
         if (player->is_alive()) {
-            fmt::print("Fortunately you were able to survive\n");
-            fmt::print("But be careful next time!\n");
+            player->notify("Fortunately you were able to survive");
+            player->notify("But be careful next time!");
         }
     }
 
